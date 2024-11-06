@@ -1,0 +1,20 @@
+# Use a Maven image with Java 17
+FROM maven:3.8.6-openjdk-17-slim AS build
+
+# Set the working directory inside the container to /Lab12
+WORKDIR /Lab12
+
+# Copy the Maven POM file and the source code into the container
+COPY pom.xml /Lab12/
+COPY src /Lab12/src/
+
+# Run Maven commands to build, test, and package the application
+RUN mvn clean install
+RUN mvn package
+RUN mvn test
+
+# Expose the port your application runs on (if applicable)
+EXPOSE 8080
+
+# Set the default command to run your application (optional)
+CMD ["java", "-jar", "target/Lab12.jar"]
